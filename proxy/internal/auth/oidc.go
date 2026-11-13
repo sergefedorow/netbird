@@ -53,9 +53,11 @@ func (o OIDC) Authenticate(r *http.Request) (string, string, error) {
 	}
 
 	redirectURL := &url.URL{
-		Scheme: auth.ResolveProto(o.forwardedProto, r.TLS),
-		Host:   r.Host,
-		Path:   r.URL.Path,
+		Scheme:   auth.ResolveProto(o.forwardedProto, r.TLS),
+		Host:     r.Host,
+		Path:     r.URL.Path,
+		RawPath:  r.URL.RawPath,
+		RawQuery: r.URL.RawQuery,
 	}
 
 	res, err := o.client.GetOIDCURL(r.Context(), &proto.GetOIDCURLRequest{
